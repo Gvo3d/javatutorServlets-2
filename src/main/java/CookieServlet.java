@@ -14,11 +14,13 @@ public class CookieServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         PrintWriter pw = resp.getWriter();
-        Cookie oreo = new Cookie("TIJava", "Fu");
-        resp.addCookie(oreo);
         String result="";
 
         Cookie[] cooks = req.getCookies();
+        if (cooks==null){
+            Cookie oreo = new Cookie("TIJava", "Fu");
+            resp.addCookie(oreo);
+        }
         for (Cookie obj: cooks){
             if (obj.getName().equals("TIJava")){
                 result = obj.getValue();
@@ -26,6 +28,8 @@ public class CookieServlet extends HttpServlet {
         }
 
         result = result + "u";
+        Cookie oreo2 = new Cookie("TIJava", result);
+        resp.addCookie(oreo2);
         pw.print("Cookie is "+ result);
         pw.close();
     }
